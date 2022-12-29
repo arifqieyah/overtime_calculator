@@ -4,13 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "mocha"
   },
   "author": "Annissa Rifqieyah",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "mocha": "^10.2.0",
     "nodemon": "^2.0.20"
   }
 }
