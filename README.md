@@ -1,8 +1,13 @@
+# Overtime Calculator
+
+![overtime policy](https://github.com/arifqieyah/overtime_calculator/blob/main/overtime_policy.png?raw=true)
+
 1. Install package with `npm install`
 2. Start application with `npm start`
 3. Send request to API
-* Request Parameter
-<pre class="json">
+* URL: `http://<your-ip-address>:<your-port>/calculate-overtime` (e.g: http://localhost:8000/calculate-overtime)
+* Request Example:
+```
 {
 	"salary": 10000000,
 	"overtimes": [{
@@ -22,5 +27,5 @@
 		}
 	]
 }
-</pre>
-* URL: `http://<your-ip-address>:<your-port>/calculate-overtime` (e.g: http://localhost:8000/calculate-overtime)
+```
+4. Run the unit test with `npm test`
