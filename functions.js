@@ -23,32 +23,31 @@ const overtime = {
 		data.total = 0;
 		data.overtimes.forEach(row => {
 			let hour = overtime.getOvertimeHours(row)
-			let subtotal = 0;
+			let multiplier = 0;
 			if(!overtime.isDayOff(row.date)) {
 				//------- weekday ----------
-
-				//the first one hour
-				let firstHour = 1 * 1.5 * salaryPerHour;
-				//the last remaining hours
-				let lastHours = (hour - 1) * 2 * salaryPerHour;
-		        //sum up all
-		        row.subtotal =  overtime.roundNumber(firstHour + lastHours);
+				let firstHour = 1 * 1.5;
+				if(hour > 1) {
+					multiplier = firstHour + ((hour - 1) * 2);
+				} else if (hour == 1) {
+					multiplier = firstHour;
+				}
 			} else {
 		        //------- weekend or day off ------------
-
-				//the first eight hours
-		        let firstEightHour = (hour > 8 ? 8 : hour) * 2 * salaryPerHour;
-		        //the ninth hour
-		        let ninthHour = ((hour > 8 && hour >= 9) ? 1 : 0) * 3 * salaryPerHour;
-		        //all the remaining hours
-				let remainingHours = hour - 9;
-		        let lastHours = (remainingHours > -1) ? (remainingHours * 4 * salaryPerHour) : 0;
-		        //sum up all
-		        row.subtotal =  overtime.roundNumber(firstEightHour + ninthHour + lastHours);
+				let firstEightHours = 8 * 2;
+				let ninthHour = 1 * 3;
+				if(hour > 9) {
+					multiplier = firstEightHours + ninthHour + ((hour - 9) * 4);
+				} else if(hour == 9) {
+					multiplier = firstEightHours + ninthHour;
+				} else if (hour <= 8) {
+					multiplier = hour * 2;
+				}
 			}
+			row.subtotal =  overtime.roundNumber(multiplier * salaryPerHour);
 			data.total = overtime.roundNumber(data.total + row.subtotal);
 		});
-		return data;
+		res.json(data);
 	}
 }
 

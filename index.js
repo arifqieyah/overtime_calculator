@@ -1,16 +1,15 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const bodyParser = require('body-parser');
 const func = require("./functions.js");
-
 const app = express();
 dotenv.config();
+app.use(bodyParser.json());                                     
+app.use(bodyParser.urlencoded({extended: true}));               
+app.use(bodyParser.text());                                    
+app.use(bodyParser.json({ type: 'application/json'}));  
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.post('/calculate-overtime', (req, res) => {
-	res.json(func.overtime.calculate(req, res));
-});
+app.route('/calculate-overtime').post(func.overtime.calculate);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Listening to port ${port}`));
